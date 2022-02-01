@@ -5,6 +5,7 @@ type ErrorCode int
 const (
 	Ok ErrorCode = iota
 	UnsupportedFilterByParameter
+	IncorrectValueForSelectedFilter
 )
 
 type ErrorResponse struct {

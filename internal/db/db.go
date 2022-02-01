@@ -84,7 +84,7 @@ func (m *Manager) GetAllTransactions() ([]cmn.Transaction, error) {
 	return transactions, nil
 }
 
-func (m *Manager) FindByField(fieldName string, valueToSearch interface{}) ([]cmn.Transaction, error) {
+func (m *Manager) FindByField(fieldName, valueToSearch string) ([]cmn.Transaction, error) {
 	authColl := m.client.Database(databaseName).Collection(collectionName)
 
 	ctx, ctxCancel := context.WithTimeout(context.Background(), 10*time.Second)
