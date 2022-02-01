@@ -16,7 +16,7 @@ func main() {
 	router := mux.NewRouter()
 	router.HandleFunc("/api/getTransactions", endpoints.GetTransactionsHandler).Methods(http.MethodGet)
 
-	port := os.Getenv("PORT")
+	port := os.Getenv("HTTP_PORT")
 	if port == "" {
 		port = "8080"
 	}

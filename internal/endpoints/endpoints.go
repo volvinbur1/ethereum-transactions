@@ -16,6 +16,7 @@ func SetManagerPointer(apiMgr *worker.ApiManager) {
 	apiManager = apiMgr
 }
 
+// GetTransactionsHandler process call to api.
 func GetTransactionsHandler(w http.ResponseWriter, r *http.Request) {
 	jsonAnswer, errResp := analyzeRequest(r)
 	w.Header().Set("Content-Type", "application/json")

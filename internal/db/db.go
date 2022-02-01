@@ -8,6 +8,7 @@ import (
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"log"
+	"os"
 	"time"
 )
 
@@ -19,25 +20,48 @@ const (
 type Manager struct {
 	client *mongo.Client
 
-	username, serverIp, port string
+	username, password string
+	serverIp, port     string
 }
 
-func New(username, serverIp, port string) *Manager {
+func New() *Manager {
 	m := &Manager{
-		username: username,
-		serverIp: serverIp,
-		port:     port,
+		username: os.Getenv("MONGO_USER"),
+		password: os.Getenv("MONGO_PWD"),
+		serverIp: os.Getenv("MONGO_IP"),
+		port:     os.Getenv("MONGO_PORT"),
 	}
+	m.setDefaultConnectionParams()
+
 	ctx, ctxCancel := context.WithTimeout(context.Background(), 10*time.Second)
 	defer ctxCancel()
 
 	var err error
-	m.client, err = mongo.Connect(ctx, options.Client().ApplyURI(fmt.Sprintf("mongodb://%s@%s:%s", m.username, m.serverIp, m.port)))
+	connectionStr := fmt.Sprintf("mongodb://%s:%s@%s:%s", m.username, m.password, m.serverIp, m.port)
+	m.client, err = mongo.Connect(ctx, options.Client().ApplyURI(connectionStr))
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	return m
+}
+
+func (m *Manager) setDefaultConnectionParams() {
+	if m.username == "" {
+		m.username = "admin"
+	}
+
+	if m.password == "" {
+		m.password = "admin"
+	}
+
+	if m.serverIp == "" {
+		m.serverIp = "localhost"
+	}
+
+	if m.port == "" {
+		m.port = "27017"
+	}
 }
 
 // Disconnect should be called before Manager release

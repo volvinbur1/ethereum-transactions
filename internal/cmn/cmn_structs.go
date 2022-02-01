@@ -2,6 +2,7 @@ package cmn
 
 import "time"
 
+// Transaction describes parameters of each transaction in ethereum blockchain
 type Transaction struct {
 	Id          string    `json:"id" bson:"id"`
 	Sender      string    `json:"sender" bson:"sender"`
