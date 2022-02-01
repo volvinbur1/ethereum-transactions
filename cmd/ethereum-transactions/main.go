@@ -1,13 +1,18 @@
 package main
 
 import (
-	"github.com/gorilla/mux"
+	"fmt"
+	"log"
 	"net/http"
 )
 
 func main() {
-	router := mux.NewRouter()
-	router.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
-
+	http.HandleFunc("/", func(writer http.ResponseWriter, request *http.Request) {
+		_, err := fmt.Fprint(writer, "That`s okay")
+		if err != nil {
+			log.Print(err)
+		}
 	})
+
+	log.Fatal(http.ListenAndServe(":8080", nil))
 }
