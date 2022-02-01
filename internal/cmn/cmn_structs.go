@@ -11,3 +11,18 @@ type Transaction struct {
 	Value       float64   `json:"value" bson:"value"`
 	Gas         float64   `json:"gas" bson:"gas"`
 }
+
+// getTransaction endpoints url parameters
+const (
+	FilterParameters = "filterBy"
+	ValueParameters  = "value"
+)
+
+// filter possible values enum
+const (
+	IdFilter          = "id"
+	SenderFilter      = "sender"
+	RecipientFilter   = "recipient"
+	BlockNumberFilter = "blockNumber"
+	TimeFilter        = "timestamp"
+)
